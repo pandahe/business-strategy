@@ -19,13 +19,22 @@ const initialState: AppState = {
     competitors: [],
     uniqueAdvantages: [],
   },
+  strategyTable: {
+    vision: '',
+    mission: '',
+    goals: [],
+    strategies: [],
+    resources: [],
+    risks: [],
+  },
+  validationQuestions: [],
   strategicFramework: {
     vision: '',
     mission: '',
-    goals: '',
-    strategies: '',
-    resources: '',
-    risks: '',
+    goals: [],
+    strategies: [],
+    resources: [],
+    risks: [],
   },
   validationAnswers: [],
 };
@@ -37,14 +46,16 @@ const AppContext = createContext<{
 
 const appReducer = (state: AppState, action: AppAction): AppState => {
   switch (action.type) {
-    case 'SET_CURRENT_STEP':
-      return { ...state, currentStep: action.payload };
     case 'UPDATE_BUSINESS_INFO':
       return { ...state, businessInfo: action.payload };
     case 'UPDATE_STRATEGIC_FRAMEWORK':
       return { ...state, strategicFramework: action.payload };
     case 'UPDATE_VALIDATION_ANSWERS':
       return { ...state, validationAnswers: action.payload };
+    case 'SET_CURRENT_STEP':
+      return { ...state, currentStep: action.payload };
+    case 'RESET_STATE':
+      return initialState;
     default:
       return state;
   }

@@ -13,18 +13,9 @@ export interface StrategyTable {
   vision: string;
   mission: string;
   goals: string[];
-  strategies: {
-    category: string;
-    items: string[];
-  }[];
-  resources: {
-    type: string;
-    items: string[];
-  }[];
-  risks: {
-    risk: string;
-    mitigation: string;
-  }[];
+  strategies: string[];
+  resources: string[];
+  risks: string[];
 }
 
 export interface ValidationQuestion {
@@ -34,18 +25,35 @@ export interface ValidationQuestion {
   relatedStrategyId?: string;
 }
 
+export interface StrategicFramework {
+  vision: string;
+  mission: string;
+  goals: string[];
+  strategies: string[];
+  resources: string[];
+  risks: string[];
+}
+
+export interface ValidationAnswer {
+  questionId: string;
+  answer: boolean;
+}
+
 export interface AppState {
   currentStep: number;
   businessInfo: BusinessInfo;
   strategyTable: StrategyTable;
   validationQuestions: ValidationQuestion[];
+  strategicFramework: StrategicFramework;
+  validationAnswers: ValidationAnswer[];
 }
 
 export type AppAction =
-  | { type: 'SET_CURRENT_STEP'; payload: number }
   | { type: 'UPDATE_BUSINESS_INFO'; payload: BusinessInfo }
   | { type: 'UPDATE_STRATEGIC_FRAMEWORK'; payload: StrategicFramework }
-  | { type: 'UPDATE_VALIDATION_ANSWERS'; payload: ValidationAnswer[] };
+  | { type: 'UPDATE_VALIDATION_ANSWERS'; payload: ValidationAnswer[] }
+  | { type: 'SET_CURRENT_STEP'; payload: number }
+  | { type: 'RESET_STATE' };
 
 export interface AdminConfig {
   stepOne: {
@@ -116,18 +124,4 @@ export interface AdminConfig {
       required: boolean;
     }>;
   };
-}
-
-export interface StrategicFramework {
-  vision: string;
-  mission: string;
-  goals: string;
-  strategies: string;
-  resources: string;
-  risks: string;
-}
-
-export interface ValidationAnswer {
-  questionId: string;
-  answer: boolean;
 } 

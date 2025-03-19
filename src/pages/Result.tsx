@@ -3,185 +3,190 @@ import {
   Container,
   Paper,
   Typography,
+  Button,
   Box,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Button,
+  Stack,
+  Chip,
 } from '@mui/material';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
 const Result: React.FC = () => {
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
   const navigate = useNavigate();
-  const { businessInfo, strategyTable } = state;
 
   const handleRestart = () => {
-    navigate('/');
+    dispatch({ type: 'RESET_STATE' });
+    navigate('/step1');
   };
 
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
         <Typography variant="h4" gutterBottom>
-          业务战略推导结果
+          战略规划文档
         </Typography>
 
         <Stack spacing={4}>
           <Box>
-            <Typography variant="h6" gutterBottom>
-              公司基本信息
+            <Typography variant="h5" gutterBottom>
+              1. 公司基本信息
             </Typography>
             <TableContainer>
               <Table size="small">
                 <TableBody>
                   <TableRow>
-                    <TableCell component="th" width="30%">公司名称</TableCell>
-                    <TableCell>{businessInfo.companyName}</TableCell>
+                    <TableCell component="th" scope="row">公司名称</TableCell>
+                    <TableCell>{state.businessInfo.companyName}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell component="th">所属行业</TableCell>
-                    <TableCell>{businessInfo.industry}</TableCell>
+                    <TableCell component="th" scope="row">行业</TableCell>
+                    <TableCell>{state.businessInfo.industry}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell component="th">年营业额</TableCell>
-                    <TableCell>{businessInfo.annualRevenue}万元</TableCell>
+                    <TableCell component="th" scope="row">年收入</TableCell>
+                    <TableCell>{state.businessInfo.annualRevenue}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell component="th">员工人数</TableCell>
-                    <TableCell>{businessInfo.employeeCount}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th">主要产品/服务</TableCell>
-                    <TableCell>{businessInfo.mainProducts.join('、')}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th">目标客户群体</TableCell>
-                    <TableCell>{businessInfo.targetCustomers.join('、')}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th">主要竞争对手</TableCell>
-                    <TableCell>{businessInfo.competitors.join('、')}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th">核心优势</TableCell>
-                    <TableCell>{businessInfo.uniqueAdvantages.join('、')}</TableCell>
+                    <TableCell component="th" scope="row">员工数量</TableCell>
+                    <TableCell>{state.businessInfo.employeeCount}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
-          </Box>
 
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              愿景与使命
-            </Typography>
-            <TableContainer>
-              <Table size="small">
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" width="30%">愿景</TableCell>
-                    <TableCell>{strategyTable.vision}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th">使命</TableCell>
-                    <TableCell>{strategyTable.mission}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              战略目标
-            </Typography>
-            <TableContainer>
-              <Table size="small">
-                <TableBody>
-                  {strategyTable.goals.map((goal, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>{goal}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              战略举措
-            </Typography>
-            {strategyTable.strategies.map((strategy, index) => (
-              <Box key={index} sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" gutterBottom>
-                  {strategy.category}
-                </Typography>
-                <TableContainer>
-                  <Table size="small">
-                    <TableBody>
-                      {strategy.items.map((item, itemIndex) => (
-                        <TableRow key={itemIndex}>
-                          <TableCell width="10%">{itemIndex + 1}</TableCell>
-                          <TableCell>{item}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                主要产品/服务
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.businessInfo.mainProducts.map((product, index) => (
+                  <Chip key={index} label={product} />
+                ))}
               </Box>
-            ))}
-          </Box>
+            </Box>
 
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              资源配置
-            </Typography>
-            {strategyTable.resources.map((resource, index) => (
-              <Box key={index} sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" gutterBottom>
-                  {resource.type}
-                </Typography>
-                <TableContainer>
-                  <Table size="small">
-                    <TableBody>
-                      {resource.items.map((item, itemIndex) => (
-                        <TableRow key={itemIndex}>
-                          <TableCell width="10%">{itemIndex + 1}</TableCell>
-                          <TableCell>{item}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                目标客户
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.businessInfo.targetCustomers.map((customer, index) => (
+                  <Chip key={index} label={customer} />
+                ))}
               </Box>
-            ))}
+            </Box>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                主要竞争对手
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.businessInfo.competitors.map((competitor, index) => (
+                  <Chip key={index} label={competitor} />
+                ))}
+              </Box>
+            </Box>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                核心优势
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.businessInfo.uniqueAdvantages.map((advantage, index) => (
+                  <Chip key={index} label={advantage} />
+                ))}
+              </Box>
+            </Box>
           </Box>
 
           <Box>
-            <Typography variant="h6" gutterBottom>
-              风险评估
+            <Typography variant="h5" gutterBottom>
+              2. 战略框架
+            </Typography>
+            <TableContainer>
+              <Table size="small">
+                <TableBody>
+                  <TableRow>
+                    <TableCell component="th" scope="row">愿景</TableCell>
+                    <TableCell>{state.strategicFramework.vision}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell component="th" scope="row">使命</TableCell>
+                    <TableCell>{state.strategicFramework.mission}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                战略目标
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.strategicFramework.goals.map((goal, index) => (
+                  <Chip key={index} label={goal} />
+                ))}
+              </Box>
+            </Box>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                战略举措
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.strategicFramework.strategies.map((strategy, index) => (
+                  <Chip key={index} label={strategy} />
+                ))}
+              </Box>
+            </Box>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                资源配置
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.strategicFramework.resources.map((resource, index) => (
+                  <Chip key={index} label={resource} />
+                ))}
+              </Box>
+            </Box>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                风险管理
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {state.strategicFramework.risks.map((risk, index) => (
+                  <Chip key={index} label={risk} />
+                ))}
+              </Box>
+            </Box>
+          </Box>
+
+          <Box>
+            <Typography variant="h5" gutterBottom>
+              3. 战略验证
             </Typography>
             <TableContainer>
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell>风险</TableCell>
-                    <TableCell>应对措施</TableCell>
+                    <TableCell>问题</TableCell>
+                    <TableCell>回答</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {strategyTable.risks.map((risk, index) => (
+                  {state.validationAnswers.map((answer, index) => (
                     <TableRow key={index}>
-                      <TableCell>{risk.risk}</TableCell>
-                      <TableCell>{risk.mitigation}</TableCell>
+                      <TableCell>{answer.questionId}</TableCell>
+                      <TableCell>{answer.answer ? '是' : '否'}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -189,15 +194,14 @@ const Result: React.FC = () => {
             </TableContainer>
           </Box>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleRestart}
-            >
-              重新开始
-            </Button>
-          </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleRestart}
+            sx={{ mt: 2 }}
+          >
+            重新开始
+          </Button>
         </Stack>
       </Paper>
     </Container>

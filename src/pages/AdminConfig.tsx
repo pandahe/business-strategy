@@ -46,7 +46,7 @@ const AdminConfigPage: React.FC = () => {
   };
 
   const handleStepOneFieldChange = (
-    field: keyof AdminConfig['stepOne'],
+    field: Exclude<keyof AdminConfig['stepOne'], 'companyInfo'>,
     subField: keyof AdminConfig['stepOne'][typeof field],
     value: string | boolean
   ) => {
