@@ -17,10 +17,10 @@ const defaultConfig: AdminConfig = {
         placeholder: '请输入所属行业',
       },
       {
-        label: '年营业额（万元）',
+        label: '年营业额',
         required: true,
         type: 'number',
-        placeholder: '请输入年营业额',
+        placeholder: '请输入年营业额（万元）',
       },
       {
         label: '员工人数',
@@ -32,22 +32,22 @@ const defaultConfig: AdminConfig = {
     mainProducts: {
       label: '主要产品/服务',
       required: true,
-      placeholder: '输入产品/服务',
+      placeholder: '请输入产品/服务名称',
     },
     targetCustomers: {
       label: '目标客户群体',
       required: true,
-      placeholder: '输入目标客户',
+      placeholder: '请输入目标客户群体',
     },
     competitors: {
       label: '主要竞争对手',
       required: true,
-      placeholder: '输入竞争对手',
+      placeholder: '请输入竞争对手名称',
     },
     uniqueAdvantages: {
       label: '核心优势',
       required: true,
-      placeholder: '输入核心优势',
+      placeholder: '请输入核心优势',
     },
   },
   stepTwo: {
@@ -77,35 +77,41 @@ const defaultConfig: AdminConfig = {
       placeholder: '请输入资源配置',
     },
     risks: {
-      label: '风险评估',
+      label: '风险管理',
       required: true,
-      placeholder: '请输入风险评估',
+      placeholder: '请输入风险管理措施',
     },
   },
   stepThree: {
     questions: [
       {
         id: 'q1',
-        question: '您的战略目标是否具体且可衡量？',
-        category: '目标设定',
+        question: '战略目标是否具体、可衡量？',
+        category: '目标评估',
         required: true,
       },
       {
         id: 'q2',
-        question: '您的战略举措是否与目标相匹配？',
-        category: '战略匹配',
+        question: '战略举措是否与目标相匹配？',
+        category: '战略评估',
         required: true,
       },
       {
         id: 'q3',
-        question: '您是否考虑了所有必要的资源？',
-        category: '资源配置',
+        question: '资源配置是否合理？',
+        category: '资源评估',
         required: true,
       },
       {
         id: 'q4',
-        question: '您是否制定了风险应对措施？',
-        category: '风险管理',
+        question: '是否考虑了潜在风险？',
+        category: '风险评估',
+        required: true,
+      },
+      {
+        id: 'q5',
+        question: '战略是否具有可持续性？',
+        category: '可持续性评估',
         required: true,
       },
     ],
